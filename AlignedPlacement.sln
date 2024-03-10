@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlignedPlacement.KKS", "AlignedPlacement.KKS\AlignedPlacement.KKS.csproj", "{A0513712-A6C8-48EF-B873-18BD7F7A338E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B3634331-0123-45F4-8F8D-0C4C8CAD1FCF} = {B3634331-0123-45F4-8F8D-0C4C8CAD1FCF}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlignedPlacement.KK", "AlignedPlacement.KK\AlignedPlacement.KK.csproj", "{92C4C2E4-5F9B-4F5A-A629-6237C37FCA2E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B3634331-0123-45F4-8F8D-0C4C8CAD1FCF} = {B3634331-0123-45F4-8F8D-0C4C8CAD1FCF}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0513712-A6C8-48EF-B873-18BD7F7A338E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0513712-A6C8-48EF-B873-18BD7F7A338E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0513712-A6C8-48EF-B873-18BD7F7A338E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0513712-A6C8-48EF-B873-18BD7F7A338E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C4C2E4-5F9B-4F5A-A629-6237C37FCA2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C4C2E4-5F9B-4F5A-A629-6237C37FCA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C4C2E4-5F9B-4F5A-A629-6237C37FCA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C4C2E4-5F9B-4F5A-A629-6237C37FCA2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BF05D29-5BFD-4D90-AE87-F7A2F60F5EBD}
+	EndGlobalSection
+EndGlobal

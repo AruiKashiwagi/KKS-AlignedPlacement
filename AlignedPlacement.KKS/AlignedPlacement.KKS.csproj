@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>KKS_AlignedPlacement</AssemblyTitle>
+    <Product>KKS_AlignedPlacement</Product>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <AssemblyName>KKS_AlignedPlacement</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants);KKS</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);KKS</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="..\AlignedPlacement.Common\studio_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AlignedPlacement.Common\AlignedPlacement.cs" Link="AlignedPlacement.cs" />
+    <Compile Include="..\AlignedPlacement.Common\AssemblyInfo.cs" Link="AssemblyInfo.cs" />
+    <Compile Include="..\AlignedPlacement.Common\Constants.cs" Link="Constants.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\AlignedPlacement.Common\studio_icon.png" Link="studio_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.Assembly-CSharp" Version="2021.9.17" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule" Version="2019.4.9" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule" Version="2019.4.9" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.TextRenderingModule" Version="2019.4.9" />
+    <PackageReference Include="IllusionModdingAPI.KKSAPI" Version="1.38.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="KKSAPI">
+      <HintPath>..\lib\KKSAPI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
