@@ -38,8 +38,8 @@ namespace AlignedPlacement
         private string m_circleAngleEndStr = "180.000";
         private float m_circleAngleEnd = 0.0f;
         private bool m_circleEnableRotation = false;
-        private string m_circleRotationOffsetStr = "90.000";
-        private float m_circleRotationOffset = 90.0f;
+        private string m_circleRotationOffsetStr = "0.000";
+        private float m_circleRotationOffset = 0.0f;
 
         private string m_speedMinStr = "0.8";
         private float m_speedMin = 0.8f;
@@ -55,7 +55,7 @@ namespace AlignedPlacement
         private string m_nowFocused = "";
         public bool IsDialogVisible;
 
-        private Rect m_guiRect = new Rect(110, 510, 450, 360);
+        private Rect m_guiRect = new Rect(110, 510, 500, 360);
         private static readonly GUIStyleState HeadingColorState = new GUIStyleState()
         {
             textColor = Color.white
@@ -68,7 +68,7 @@ namespace AlignedPlacement
         };
         private static readonly Rect CircleAxesRect = new Rect(123, 120, 316, 40);
         private static readonly string[] CircleAxesChoices = new string[] { "XY\n(Vertical)", "ZY\n(Vertical)", "ZX\n(Horizontal)" };
-        private static readonly Rect RotationAxisRect = new Rect(189, 284, 250, 20);
+        private static readonly Rect RotationAxisRect = new Rect(189, 287, 250, 20);
         private static readonly string[] RotationAxisChoices = new string[] { "X", "Y", "Z" };
 
         public void Start()
@@ -111,7 +111,7 @@ namespace AlignedPlacement
         private void GuiLinearIncrementContents()
         {
             GUILayout.BeginVertical(GUI.skin.box);
-            GUILayout.Label("Linear increment", HeadingStyle);
+            GUILayout.Label("Linear Increment", HeadingStyle);
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Position");
@@ -146,8 +146,8 @@ namespace AlignedPlacement
         private void GuiCircularPlacmentContents()
         {
             GUILayout.BeginVertical(GUI.skin.box);
-            GUILayout.Label("Circular placement", HeadingStyle);
-            GUILayout.Label("Axes");
+            GUILayout.Label("Circular Placement", HeadingStyle);
+            GUILayout.Label("Circle axes");
             m_circleAxes = GUI.Toolbar(CircleAxesRect, m_circleAxes, CircleAxesChoices);
             GUILayout.Space(20);
 
@@ -168,12 +168,18 @@ namespace AlignedPlacement
             m_isEndAngleInclusive = GUILayout.Toggle(m_isEndAngleInclusive, "End angle is inclusive");
             GUILayout.EndHorizontal();
 
-            m_circleEnableRotation = GUILayout.Toggle(m_circleEnableRotation, "Rotate each objects");
+            GUILayout.BeginVertical(GUI.skin.box);
+            m_circleEnableRotation = GUILayout.Toggle(m_circleEnableRotation, "Rotate each object");
             GUILayout.Label("Rotation axis");
             m_circleRotationAxis = GUI.Toolbar(RotationAxisRect, m_circleRotationAxis, RotationAxisChoices);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Rotation offset angle");
             DefineFloatField("circle_rotation_offset", ref m_circleRotationOffsetStr, ref m_circleRotationOffset);
+            GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
             if (GUILayout.Button("Go", GUILayout.Width(100)))
             {
                 UpdateFloatValue(ref m_circleRadiusStr, ref m_circleRadius);
@@ -183,13 +189,14 @@ namespace AlignedPlacement
                 ApplyCircularPlacement();
             }
             GUILayout.EndHorizontal();
+
             GUILayout.EndVertical();
         }
 
         private void GuiSpeedRandomizerContents()
         {
             GUILayout.BeginVertical(GUI.skin.box);
-            GUILayout.Label("Randomize animation speed", HeadingStyle);
+            GUILayout.Label("Animation Speed Randomizer", HeadingStyle);
             GUILayout.BeginHorizontal();
             GUILayout.Label("min.");
             DefineFloatField("speed_min", ref m_speedMinStr, ref m_speedMin);

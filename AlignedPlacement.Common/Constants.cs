@@ -21,6 +21,6 @@
         public const string PluginGUID = "com.kashiwagi.arui.alignedplacement";
         public const string PluginName = "Aligned Placement Helper";
         public const string PluginNameInternal = Constants.Prefix + "_AlignedPlacement";
-        public const string PluginVersion = "0.8";
+        public const string PluginVersion = "1.0";
     }
 }
