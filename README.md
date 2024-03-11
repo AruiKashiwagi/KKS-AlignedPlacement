@@ -93,7 +93,9 @@ Note that Koikatsu requires .NET Framework 3.5, and Koikatsu Sunshine requires 4
 
 # Notice
 I don't use Discord so often. If you found any problem, open an issue on GitHub or contact me on X (Twitter).
+
 https://twitter.com/Arui_Kashiwagi
+
 This plugin is free software. You can redistribute or modify it without my permission.
 
 # 日本語説明
@@ -191,5 +193,7 @@ Visual Studio 2022用ソリューションファイルを同梱しているの�
 # 諸注意
 何か問題があればGitHubのIssuesに登録するか、もしくはX（Twitter）経由でご連絡ください。
 （作者はDiscordはほとんど見ていません）
+
 https://twitter.com/Arui_Kashiwagi
+
 再配布・改変に制約はありません。各自の責任において自由に行ってください。
