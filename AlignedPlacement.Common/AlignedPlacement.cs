@@ -151,7 +151,11 @@ namespace AlignedPlacement
             m_circleAxes = GUI.Toolbar(CircleAxesRect, m_circleAxes, CircleAxesChoices);
             GUILayout.Space(20);
 
+            GUILayout.BeginHorizontal();
             m_useFirstObjectAsCenterPoint = GUILayout.Toggle(m_useFirstObjectAsCenterPoint, "Use the first object as a center point");
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
             GUILayout.BeginHorizontal();
             GUILayout.Label("Radius");
             DefineFloatField("circle_radius", ref m_circleRadiusStr, ref m_circleRadius);
@@ -169,7 +173,10 @@ namespace AlignedPlacement
             GUILayout.EndHorizontal();
 
             GUILayout.BeginVertical(GUI.skin.box);
+            GUILayout.BeginHorizontal();
             m_circleEnableRotation = GUILayout.Toggle(m_circleEnableRotation, "Rotate each object");
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
             GUILayout.Label("Rotation axis");
             m_circleRotationAxis = GUI.Toolbar(RotationAxisRect, m_circleRotationAxis, RotationAxisChoices);
             GUILayout.BeginHorizontal();
@@ -285,14 +292,12 @@ namespace AlignedPlacement
                 {
                     if (obj.enablePos)
                     {
-                        Vector3 newAngle = new Vector3(
-                                firstTarget.transformTarget.localEulerAngles.x + (m_linearAngleX * count),
-                                firstTarget.transformTarget.localEulerAngles.y + (m_linearAngleY * count),
-                                firstTarget.transformTarget.localEulerAngles.z + (m_linearAngleZ * count)
-                            );
-                        count++;
-                        obj.transformTarget.localEulerAngles = newAngle;
+                        // Copy the first object's quaternion, then rotate it to avoid gimbal lock
+                        obj.transformTarget.localRotation = firstTarget.transformTarget.localRotation;
+                        Vector3 newAngle = new Vector3(m_linearAngleX * count, m_linearAngleY * count, m_linearAngleZ * count);
+                        obj.transformTarget.Rotate(newAngle);
                         obj.changeAmount.rot = obj.transformTarget.localEulerAngles;
+                        count++;
                     }
                 }
             }
@@ -310,10 +315,9 @@ namespace AlignedPlacement
             RememberCurrentPosAndRot(selectedObjects);
 
             // Determine target axes
-            float posx = 0, posy = 0, posz = 0, rotx = 0, roty = 0, rotz = 0;
+            float posx = 0, posy = 0, posz = 0;
             ref float posAxis0Ref = ref posz;
             ref float posAxis1Ref = ref posx;
-            ref float rotAxisRef = ref rotz;
             switch (m_circleAxes)
             {
                 case 0:
@@ -327,20 +331,6 @@ namespace AlignedPlacement
                 case 2:
                     posAxis0Ref = ref posz;
                     posAxis1Ref = ref posx;
-                    break;
-                default:
-                    return;
-            }
-            switch (m_circleRotationAxis)
-            {
-                case 0:
-                    rotAxisRef = ref rotx;
-                    break;
-                case 1:
-                    rotAxisRef = ref roty;
-                    break;
-                case 2:
-                    rotAxisRef = ref rotz;
                     break;
                 default:
                     return;
@@ -382,7 +372,8 @@ namespace AlignedPlacement
             // Place all the selected objects
             double curCircleDegree = m_circleAngleStart;
             double curRotation = m_circleRotationOffset;
-            int count = 0;
+            Quaternion firstQuatCopy = new Quaternion();
+            firstQuatCopy = firstTarget.transformTarget.localRotation;
             foreach (GuideObject obj in selectedObjects)
             {
                 if (m_useFirstObjectAsCenterPoint && (firstTarget == obj))
@@ -391,7 +382,6 @@ namespace AlignedPlacement
                 }
                 if (obj.enablePos)
                 {
-                    count++;
                     double radian = Math.PI * curCircleDegree / 180.0;
                     posAxis0Ref = (float)(Math.Cos(radian) * m_circleRadius);
                     posAxis1Ref = (float)(Math.Sin(radian) * m_circleRadius);
@@ -405,13 +395,25 @@ namespace AlignedPlacement
                     curCircleDegree += degreeStep;
                     if (m_circleEnableRotation)
                     {
-                        rotx = firstTarget.transformTarget.localEulerAngles.x;
-                        roty = firstTarget.transformTarget.localEulerAngles.y;
-                        rotz = firstTarget.transformTarget.localEulerAngles.z;
-                        rotAxisRef = (float)curRotation;
+                        // Copy the first object's quaternion, then rotate it to avoid gimbal lock
+                        obj.transformTarget.localRotation = firstQuatCopy;
+                        float rotx = 0, roty = 0, rotz = 0;
+                        switch (m_circleRotationAxis)
+                        {
+                            case 0:
+                                rotx = (float)(curRotation - obj.transformTarget.localEulerAngles.x);
+                                break;
+                            case 1:
+                                roty = (float)(curRotation - obj.transformTarget.localEulerAngles.y);
+                                break;
+                            case 2:
+                                rotz = (float)(curRotation - obj.transformTarget.localEulerAngles.z);
+                                break;
+                            default:
+                                return;
+                        }
                         Vector3 newAngle = new Vector3(rotx, roty, rotz);
-
-                        obj.transformTarget.localEulerAngles = newAngle;
+                        obj.transformTarget.Rotate(newAngle);
                         obj.changeAmount.rot = obj.transformTarget.localEulerAngles;
                     }
                     curRotation += degreeStep;
